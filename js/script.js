@@ -1,3 +1,11 @@
+// Loader
+
+$(window).on("load", function() {
+  $(".loader .inner").fadeOut(1000, function() {
+    $(".loader").fadeOut(750);
+  });
+});
+
 $(document).ready(function() {
   // Plugin for superslides
   $("#slides").superslides({
@@ -5,7 +13,7 @@ $(document).ready(function() {
     play: 5000,
     pagination: false
   });
-
+  // Typed words
   var typed = new Typed(".typed", {
     strings: ["Full Stack Developer.", "Student.", "Innovator."],
     typeSpeed: 95,
@@ -14,6 +22,7 @@ $(document).ready(function() {
     showCursor: false
   });
 
+  // Carousel for images
   $(".owl-carousel").owlCarousel({
     loop: true,
     items: 4,
@@ -59,6 +68,7 @@ $(document).ready(function() {
     }
   });
 
+  // Fancybox
   $("[data-fancybox]").fancybox();
   $(".items").isotope({
     filter: "*",
@@ -69,6 +79,7 @@ $(document).ready(function() {
     }
   });
 
+  // Filter for projects
   $("#filters a").click(function() {
     $("#filters .current").removeClass("current");
 
@@ -85,4 +96,32 @@ $(document).ready(function() {
     });
     return false;
   });
+
+  // Transition for Navbar links being selected
+
+  // e is for passing the event in the function
+  $("#navigation li a").click(function(e) {
+    e.preventDefault();
+
+    var targetElement = $(this).attr("href");
+    var targetPosition = $(targetElement).offset().top;
+    $("html,body").animate({ scrollTop: targetPosition - 50 }, "slow");
+  });
+
+  // Sticky Navbar
+  const nav = $("#navigation");
+  const navTop = nav.offset().top;
+  $(window).on("scroll", stickyNavigation);
+
+  function stickyNavigation() {
+    const body = $("body");
+
+    if ($(window).scrollTop() >= navTop) {
+      body.css("padding-top", nav.outerHeight() + "px");
+      body.addClass("fixedNav");
+    } else {
+      body.css("padding-top", 0);
+      body.removeClass("fixedNav");
+    }
+  }
 });
